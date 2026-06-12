@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Tabla de goles — Promo Mundial Gógoblu. Cada $10.000 en compras suma 1 gol."
+    />
+    <title>Tabla de Goles | Gógoblu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Vista: Ranking -->
+    <div class="page" id="rankingView">
+      <div class="overlay"></div>
+
+      <header class="header">
+        <img src="Copa.png" alt="Copa del Mundial" class="copa" />
+        <h1 class="title">Tabla de Goles</h1>
+        <p class="subtitle">Cada <strong>$10.000</strong> en compras = <strong>1 gol</strong></p>
+      </header>
+
+      <main class="main">
+        <section class="stats-bar" id="statsBar" hidden>
+          <div class="stat">
+            <span class="stat-value" id="totalGoles">0</span>
+            <span class="stat-label">Goles totales</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="totalClientes">0</span>
+            <span class="stat-label">Jugadores</span>
+          </div>
+        </section>
+
+        <div class="state-message" id="loading">
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Cargando tabla de goles...</p>
+        </div>
+
+        <div class="state-message state-message--error" id="error" hidden>
+          <p id="errorText">No se pudieron cargar los datos.</p>
+          <button type="button" class="btn-retry" id="retryBtn">Reintentar</button>
+        </div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <div class="emoji">⚽</div>
+          <p>Aún no hay goles registrados.<br />¡Sé el primero en anotar!</p>
+        </div>
+
+        <ol class="leaderboard" id="leaderboard" hidden></ol>
+
+        <p class="last-update" id="lastUpdate" hidden></p>
+      </main>
+
+      <footer class="footer">
+        <button type="button" class="logo-btn" id="openGameBtn" aria-label="Jugar minijuegos">
+          <img src="Logo.png" alt="Gógoblu" class="logo" />
+        </button>
+      </footer>
+    </div>
+
+    <!-- Vista: Menú de minijuegos -->
+    <div class="page page--game-menu" id="gameMenuView" hidden>
+      <div class="overlay overlay--game"></div>
+
+      <header class="game-header">
+        <h2 class="game-menu-title">Minijuegos Gógoblu</h2>
+        <p class="game-instructions">Elige un desafío — tienes 1 minuto en cada uno</p>
+      </header>
+
+      <main class="game-menu">
+        <button type="button" class="game-menu-btn" id="playTirosLocosBtn">
+          <span class="game-menu-btn-icon">🎯</span>
+          <span class="game-menu-btn-name">Tiros locos</span>
+          <span class="game-menu-btn-desc">Dispara a la portería móvil</span>
+        </button>
+        <button type="button" class="game-menu-btn" id="playTreintaYUnaBtn">
+          <span class="game-menu-btn-icon">⚽</span>
+          <span class="game-menu-btn-name">30 y una</span>
+          <span class="game-menu-btn-desc">No dejes caer el balón</span>
+        </button>
+      </main>
+
+      <footer class="game-footer game-footer--menu">
+        <button type="button" class="btn-back" id="backFromMenuBtn">Volver al ranking</button>
+      </footer>
+    </div>
+
+    <!-- Vista: Tiros locos -->
+    <div class="page page--game" id="tirosLocosView" hidden>
+      <div class="overlay overlay--game"></div>
+
+      <header class="game-header">
+        <div class="game-hud">
+          <div class="game-stat-box">
+            <span class="game-score-label">Goles</span>
+            <span class="game-score-value" id="gameScore">0</span>
+          </div>
+          <div class="game-stat-box">
+            <span class="game-score-label">Tiempo</span>
+            <span class="game-score-value game-timer-value" id="tirosTimer">1:00</span>
+          </div>
+        </div>
+        <p class="game-instructions">La portería se mueve — arrastra el balón y suéltalo para disparar</p>
+      </header>
+
+      <div class="game-arena" id="gameArena">
+        <div class="field-play-area" id="fieldPlayArea">
+          <img src="Cancha.png" alt="Cancha" class="field-bg" id="fieldBg" />
+          <div class="goal-mover" id="goalMover">
+            <img src="Porteria.png" alt="Portería" class="goal-target" id="goalTarget" />
+          </div>
+        </div>
+        <canvas class="aim-line" id="aimLine" aria-hidden="true"></canvas>
+        <img
+          src="Balon.webp"
+          alt="Balón"
+          class="player-ball"
+          id="playerBall"
+          draggable="false"
+        />
+      </div>
+
+      <footer class="game-footer">
+        <div class="game-footer-actions">
+          <button type="button" class="btn-restart" id="restartTirosBtn">Reiniciar</button>
+          <button type="button" class="btn-back" id="backToRankingBtn">Volver al menú</button>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Vista: 30 y una -->
+    <div class="page page--game" id="juggleView" hidden>
+      <div class="overlay overlay--game"></div>
+
+      <header class="game-header">
+        <div class="game-hud">
+          <div class="game-stat-box">
+            <span class="game-score-label">Botes</span>
+            <span class="game-score-value" id="juggleScore">0</span>
+          </div>
+          <div class="game-stat-box">
+            <span class="game-score-label">Tiempo</span>
+            <span class="game-score-value game-timer-value" id="juggleTimer">1:00</span>
+          </div>
+        </div>
+        <p class="game-instructions">Toca el balón para mantenerlo en el aire</p>
+      </header>
+
+      <div class="juggle-arena" id="juggleArena">
+        <img src="Cancha.png" alt="Cancha" class="juggle-field-bg" id="juggleFieldBg" />
+        <img
+          src="Balon.webp"
+          alt="Balón"
+          class="juggle-ball"
+          id="juggleBall"
+          draggable="false"
+        />
+      </div>
+
+      <footer class="game-footer">
+        <div class="game-footer-actions">
+          <button type="button" class="btn-restart" id="restartJuggleBtn">Reiniciar</button>
+          <button type="button" class="btn-back" id="backFromJuggleBtn">Volver al menú</button>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Instrucciones antes de jugar -->
+    <div class="game-instructions-overlay" id="gameInstructionsOverlay" hidden>
+      <div class="game-instructions-card">
+        <h3 class="game-instructions-title" id="instructionsTitle">Instrucciones</h3>
+        <ul class="game-instructions-list" id="instructionsList"></ul>
+        <button type="button" class="btn-start-game" id="startGameBtn">Iniciar</button>
+      </div>
+    </div>
+
+    <!-- Resultado de ronda (compartido) -->
+    <div class="game-result-overlay" id="gameResultOverlay" hidden>
+      <div class="game-result-card">
+        <p class="game-result-title" id="gameResultTitle">Tiempo</p>
+        <p class="game-result-value" id="gameResultValue">0</p>
+        <p class="game-result-sub" id="gameResultSub">Preparando nueva ronda...</p>
+      </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+    <script src="games-shared.js"></script>
+    <script src="game-tiros.js"></script>
+    <script src="game-juggle.js"></script>
+  </body>
+</html>

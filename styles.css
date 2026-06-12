@@ -1,0 +1,920 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:root {
+  --gold: #f5c518;
+  --gold-dark: #c9a000;
+  --silver: #c0c0c0;
+  --bronze: #cd7f32;
+  --green-dark: #0b3d1f;
+  --green-mid: #1a6b38;
+  --white: #ffffff;
+  --glass: rgba(8, 32, 18, 0.82);
+  --glass-light: rgba(255, 255, 255, 0.12);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--white);
+  background: #0a2e18;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: url('Cancha.jpg') center top / cover no-repeat fixed;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 20, 50, 0.55) 0%,
+    rgba(0, 40, 20, 0.45) 45%,
+    rgba(0, 25, 12, 0.75) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header,
+.main,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 1rem 0.5rem;
+  text-align: center;
+}
+
+.copa {
+  width: min(140px, 38vw);
+  height: auto;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.5));
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.4rem, 8vw, 3.5rem);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
+  color: var(--gold);
+}
+
+.subtitle {
+  margin-top: 0.35rem;
+  font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+  opacity: 0.95;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.subtitle strong {
+  color: var(--gold);
+}
+
+/* Main */
+.main {
+  flex: 1;
+  width: min(560px, 100%);
+  margin: 0 auto;
+  padding: 0.75rem 1rem 1rem;
+}
+
+.stats-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.stat {
+  flex: 1;
+  background: var(--glass);
+  border: 1px solid var(--glass-light);
+  border-radius: 12px;
+  padding: 0.75rem;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.stat-value {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+/* States */
+.state-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  background: var(--glass);
+  border-radius: 16px;
+  border: 1px solid var(--glass-light);
+  backdrop-filter: blur(8px);
+}
+
+.state-message--error {
+  border-color: rgba(255, 100, 100, 0.4);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-retry {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--green-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-retry:hover {
+  background: var(--gold-dark);
+  transform: scale(1.03);
+}
+
+/* Leaderboard */
+.leaderboard {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.leaderboard-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-light);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.leaderboard-item--gold {
+  border-color: rgba(245, 197, 24, 0.7);
+  background: linear-gradient(135deg, rgba(245, 197, 24, 0.18), var(--glass));
+}
+
+.leaderboard-item--silver {
+  border-color: rgba(192, 192, 192, 0.6);
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.14), var(--glass));
+}
+
+.leaderboard-item--bronze {
+  border-color: rgba(205, 127, 50, 0.6);
+  background: linear-gradient(135deg, rgba(205, 127, 50, 0.14), var(--glass));
+}
+
+.rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.leaderboard-item--gold .rank {
+  background: var(--gold);
+  color: var(--green-dark);
+}
+
+.leaderboard-item--silver .rank {
+  background: var(--silver);
+  color: #333;
+}
+
+.leaderboard-item--bronze .rank {
+  background: var(--bronze);
+  color: #fff;
+}
+
+.player-info {
+  min-width: 0;
+}
+
+.player-name {
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-meta {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  margin-top: 0.15rem;
+}
+
+.goals-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 3.2rem;
+}
+
+.goals-count {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.goals-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--glass);
+  border-radius: 16px;
+  border: 1px solid var(--glass-light);
+  backdrop-filter: blur(8px);
+}
+
+.empty-state p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.empty-state .emoji {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.last-update {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  opacity: 0.65;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1rem 1.5rem;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.55));
+}
+
+.logo {
+  width: min(160px, 45vw);
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  pointer-events: none;
+}
+
+.logo-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: transform 0.2s ease;
+}
+
+.logo-btn:hover,
+.logo-btn:focus-visible {
+  transform: scale(1.05);
+  outline: none;
+}
+
+.logo-btn:active {
+  transform: scale(0.97);
+}
+
+/* ===== Juego ===== */
+.page--game {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+.overlay--game {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 20, 50, 0.35) 0%,
+    rgba(0, 40, 20, 0.2) 50%,
+    rgba(0, 25, 12, 0.45) 100%
+  );
+}
+
+.game-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 1rem 1rem 0.5rem;
+}
+
+.game-menu-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 7vw, 2.8rem);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
+}
+
+.page--game-menu .game-header {
+  padding-bottom: 0.25rem;
+}
+
+.game-menu {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: min(420px, 100%);
+  margin: 0 auto;
+  padding: 0.5rem 1rem 0;
+  justify-content: flex-start;
+}
+
+.game-footer--menu {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.game-menu-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--glass-light);
+  border-radius: 16px;
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  text-align: left;
+  color: var(--white);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.game-menu-btn:hover {
+  transform: scale(1.02);
+  border-color: rgba(245, 197, 24, 0.5);
+}
+
+.game-menu-btn:active {
+  transform: scale(0.98);
+}
+
+.game-menu-btn-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.game-menu-btn-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.75rem;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+.game-menu-btn-desc {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.game-hud {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.game-stat-box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 7rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-light);
+  border-radius: 14px;
+  padding: 0.6rem 1.4rem;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.game-score {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--glass);
+  border: 1px solid var(--glass-light);
+  border-radius: 14px;
+  padding: 0.6rem 1.8rem;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.game-score-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.85;
+}
+
+.game-score-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 9vw, 3.2rem);
+  color: var(--gold);
+  line-height: 1;
+}
+
+.game-timer-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.game-instructions {
+  margin-top: 0.5rem;
+  font-size: clamp(0.78rem, 3vw, 0.9rem);
+  opacity: 0.9;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.game-arena {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: min(520px, 100%);
+  margin: 0 auto;
+  padding: 0.5rem 1rem 1rem;
+  overflow: hidden;
+  min-height: 0;
+  --ball-zone-height: min(96px, 20vw);
+}
+
+.field-play-area {
+  position: absolute;
+  top: 0.25rem;
+  left: 1rem;
+  right: 1rem;
+  bottom: calc(1rem + var(--ball-zone-height));
+  overflow: hidden;
+  z-index: 0;
+  border-radius: 10px;
+}
+
+.field-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35));
+}
+
+.goal-mover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.goal-target {
+  display: block;
+  width: min(48px, 12vw);
+  height: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.goal-target.is-hit {
+  animation: goalTargetHit 0.45s ease;
+}
+
+@keyframes goalTargetHit {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+.aim-line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.player-ball {
+  position: absolute;
+  width: min(64px, 16vw);
+  height: min(64px, 16vw);
+  object-fit: contain;
+  cursor: grab;
+  z-index: 4;
+  touch-action: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+  transition: opacity 0.25s ease;
+}
+
+.player-ball.is-dragging {
+  cursor: grabbing;
+}
+
+.player-ball.is-flying {
+  cursor: default;
+  pointer-events: none;
+}
+
+.player-ball.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.player-ball.is-goal {
+  animation: goalPulse 0.5s ease;
+}
+
+@keyframes goalPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+.game-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 1rem 1.25rem;
+}
+
+.game-footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+}
+
+.btn-restart {
+  padding: 0.75rem 1.4rem;
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  background: rgba(8, 32, 18, 0.55);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-restart:hover {
+  background: rgba(245, 197, 24, 0.15);
+  transform: scale(1.03);
+}
+
+.btn-restart:active {
+  transform: scale(0.98);
+}
+
+.btn-back {
+  padding: 0.75rem 1.6rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--green-dark);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-back:hover {
+  background: var(--gold-dark);
+  transform: scale(1.03);
+}
+
+.btn-back:active {
+  transform: scale(0.98);
+}
+
+.game-feedback {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  z-index: 10;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 12vw, 4rem);
+  color: var(--gold);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.game-feedback.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.page--game-menu {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 0.5rem;
+}
+
+.juggle-arena {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: min(520px, 100%);
+  margin: 0 auto;
+  padding: 0.5rem 1rem 1rem;
+  overflow: hidden;
+  min-height: 0;
+  touch-action: none;
+}
+
+.juggle-field-bg {
+  position: absolute;
+  inset: 0.25rem 1rem 1rem;
+  width: calc(100% - 2rem);
+  height: calc(100% - 1.25rem);
+  object-fit: contain;
+  border-radius: 10px;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35));
+}
+
+.juggle-ball {
+  position: absolute;
+  width: min(64px, 16vw);
+  height: min(64px, 16vw);
+  object-fit: contain;
+  z-index: 2;
+  touch-action: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+  cursor: pointer;
+}
+
+.juggle-ball.is-hit {
+  animation: juggleHit 0.12s ease;
+}
+
+@keyframes juggleHit {
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.game-result-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.game-instructions-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(6px);
+  padding: 1rem;
+}
+
+.game-instructions-card {
+  background: var(--glass);
+  border: 1px solid rgba(245, 197, 24, 0.45);
+  border-radius: 20px;
+  padding: 1.75rem 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.35s ease both;
+  text-align: left;
+}
+
+.game-instructions-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 6vw, 2.4rem);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.game-instructions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  opacity: 0.95;
+}
+
+.game-instructions-list li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.game-instructions-list li::before {
+  content: '⚽';
+  position: absolute;
+  left: 0;
+  font-size: 0.75rem;
+  top: 0.15rem;
+}
+
+.btn-start-game {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1.6rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--green-dark);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-start-game:hover {
+  background: var(--gold-dark);
+  transform: scale(1.02);
+}
+
+.btn-start-game:active {
+  transform: scale(0.98);
+}
+
+.game-result-card {
+  text-align: center;
+  background: var(--glass);
+  border: 1px solid rgba(245, 197, 24, 0.45);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.35s ease both;
+}
+
+.game-result-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
+}
+
+.game-result-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 18vw, 5.5rem);
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.game-result-sub {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+@media (min-width: 600px) {
+  .goal-target {
+    width: 54px;
+  }
+
+  .player-ball {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (min-width: 600px) {
+  .header {
+    padding-top: 2rem;
+  }
+
+  .copa {
+    width: 160px;
+  }
+}
