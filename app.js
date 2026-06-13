@@ -15,14 +15,6 @@ const elements = {
 
 let refreshTimer = null;
 
-function formatCurrency(value) {
-  return new Intl.NumberFormat('es-CL', {
-    style: 'currency',
-    currency: 'CLP',
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
 function parseSheetDateValue(value) {
   if (!value) return null;
 
@@ -284,17 +276,12 @@ function renderLeaderboard(leaderboard) {
   elements.leaderboard.innerHTML = leaderboard
     .map((item, index) => {
       const rankClass = getRankClass(index);
-      const meta =
-        item.compras > 1
-          ? `${item.compras} compras · ${formatCurrency(item.totalValor)}`
-          : formatCurrency(item.totalValor);
 
       return `
         <li class="leaderboard-item ${rankClass}" style="animation-delay:${index * 0.05}s">
           <span class="rank">${index + 1}</span>
           <div class="player-info">
             <div class="player-name">${escapeHtml(item.cliente)}</div>
-            <div class="player-meta">${escapeHtml(meta)}</div>
           </div>
           <div class="goals-badge">
             <span class="goals-count">${item.goles}</span>
@@ -363,3 +350,21 @@ document.addEventListener('visibilitychange', () => {
 
 loadData();
 startAutoRefresh();
+
+const openTermsBtn = document.getElementById('openTermsBtn');
+const termsOverlay = document.getElementById('termsOverlay');
+const closeTermsBtn = document.getElementById('closeTermsBtn');
+
+openTermsBtn?.addEventListener('click', () => {
+  termsOverlay.hidden = false;
+});
+
+closeTermsBtn?.addEventListener('click', () => {
+  termsOverlay.hidden = true;
+});
+
+termsOverlay?.addEventListener('click', (event) => {
+  if (event.target === termsOverlay) {
+    termsOverlay.hidden = true;
+  }
+});

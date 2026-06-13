@@ -60,9 +60,12 @@
       </main>
 
       <footer class="footer">
-        <button type="button" class="logo-btn" id="openGameBtn" aria-label="Jugar minijuegos">
-          <img src="Logo.png" alt="Gógoblu" class="logo" />
-        </button>
+        <div class="footer-brand">
+          <button type="button" class="logo-btn" id="openGameBtn" aria-label="Jugar minijuegos">
+            <img src="Logo.png" alt="Gógoblu" class="logo" />
+          </button>
+          <button type="button" class="btn-terms" id="openTermsBtn">Términos y condiciones</button>
+        </div>
       </footer>
     </div>
 
@@ -170,6 +173,32 @@
           <button type="button" class="btn-back" id="backFromJuggleBtn">Volver al menú</button>
         </div>
       </footer>
+    </div>
+
+    <!-- Términos y condiciones -->
+    <div class="terms-overlay" id="termsOverlay" hidden>
+      <div class="terms-card">
+        <h3 class="terms-title">Términos y condiciones</h3>
+        <ul class="terms-list">
+          <li>Competencia válida hasta el domingo 19 de julio de 2026, a las 11:59 p.m.</li>
+          <li>
+            Se elegirá sólo un ganador, quien tenga al finalizar, la mayor cantidad de goles
+            marcados.
+          </li>
+          <li>
+            Cada compra de 10.000 pesos, será equivalente a un gol. Cabe mencionar que, las
+            compras no son acumulativas y solo se contarán compras inmediatas y cerradas de
+            10.000 pesos en adelante.
+          </li>
+          <li>
+            En caso de empate entre cantidad de goles, se tendrán en cuenta otros factores de
+            desempate como: mayor cantidad de dinero en compras, mayor cantidad de compras,
+            fechas de compras efectuadas (quien tenga mayor cantidad de compras más cercanas a
+            la fecha de inicio de la competición).
+          </li>
+        </ul>
+        <button type="button" class="btn-back" id="closeTermsBtn">Cerrar</button>
+      </div>
     </div>
 
     <!-- Instrucciones antes de jugar -->
