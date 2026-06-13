@@ -99,6 +99,7 @@ function buildLeaderboard(rows) {
 
   return Array.from(byClient.values()).sort((a, b) => {
     if (b.goles !== a.goles) return b.goles - a.goles;
+    if (b.totalValor !== a.totalValor) return b.totalValor - a.totalValor;
     return a.cliente.localeCompare(b.cliente, 'es');
   });
 }
