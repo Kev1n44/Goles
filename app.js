@@ -23,6 +23,28 @@ function formatCurrency(value) {
   }).format(value);
 }
 
+function parseSheetDateValue(value) {
+  if (!value) return null;
+
+  if (value instanceof Date) {
+    return value.getTime();
+  }
+
+  const text = String(value);
+  const gvizDate = text.match(/Date\((\d+),(\d+),(\d+)\)/);
+  if (gvizDate) {
+    const [, year, month, day] = gvizDate.map(Number);
+    return new Date(year, month, day).getTime();
+  }
+
+  const parsed = new Date(text);
+  if (!Number.isNaN(parsed.getTime())) {
+    return parsed.getTime();
+  }
+
+  return null;
+}
+
 function parseSheetDate(value) {
   if (!value) return '';
 
@@ -83,11 +105,19 @@ function buildLeaderboard(rows) {
       compras: 0,
       totalValor: 0,
       ultimaFecha: '',
+      primeraCompra: null,
     };
 
     current.goles += row.goles;
     current.compras += 1;
     current.totalValor += row.valor;
+
+    const fechaMs = parseSheetDateValue(row.fecha);
+    if (fechaMs != null) {
+      if (current.primeraCompra == null || fechaMs < current.primeraCompra) {
+        current.primeraCompra = fechaMs;
+      }
+    }
 
     const fechaTexto = parseSheetDate(row.fecha);
     if (fechaTexto) {
@@ -100,6 +130,12 @@ function buildLeaderboard(rows) {
   return Array.from(byClient.values()).sort((a, b) => {
     if (b.goles !== a.goles) return b.goles - a.goles;
     if (b.totalValor !== a.totalValor) return b.totalValor - a.totalValor;
+    if (b.compras !== a.compras) return b.compras - a.compras;
+
+    const aFecha = a.primeraCompra ?? Number.MAX_SAFE_INTEGER;
+    const bFecha = b.primeraCompra ?? Number.MAX_SAFE_INTEGER;
+    if (aFecha !== bFecha) return aFecha - bFecha;
+
     return a.cliente.localeCompare(b.cliente, 'es');
   });
 }
