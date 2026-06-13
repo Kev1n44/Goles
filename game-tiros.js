@@ -475,6 +475,7 @@
   }
 
   function start() {
+    window.GamesShared.resetScroll();
     tirosLocosView.hidden = false;
     window.GamesShared.showInstructions(
       'Tiros locos',

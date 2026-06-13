@@ -201,6 +201,7 @@
   }
 
   function start() {
+    window.GamesShared.resetScroll();
     juggleView.hidden = false;
     window.GamesShared.showInstructions(
       '30 y una',

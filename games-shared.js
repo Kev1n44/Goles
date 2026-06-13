@@ -51,7 +51,15 @@
     }, 100);
   }
 
+  function resetScroll() {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    gameMenuView.scrollTop = 0;
+  }
+
   function showMenu() {
+    resetScroll();
     rankingView.hidden = true;
     gameMenuView.hidden = false;
 
@@ -70,6 +78,7 @@
     window.JuggleGame?.stop();
     hideMenu();
     rankingView.hidden = false;
+    resetScroll();
 
     if (window.RankingApp?.resumeAutoRefresh) {
       window.RankingApp.resumeAutoRefresh();
@@ -82,6 +91,7 @@
     window.JuggleGame?.stop();
     rankingView.hidden = true;
     gameMenuView.hidden = false;
+    resetScroll();
   }
 
   function hideInstructions() {
@@ -124,11 +134,13 @@
   backFromMenuBtn.addEventListener('click', showRanking);
 
   playTirosLocosBtn.addEventListener('click', () => {
+    resetScroll();
     hideMenu();
     window.TirosLocos.start();
   });
 
   playTreintaYUnaBtn.addEventListener('click', () => {
+    resetScroll();
     hideMenu();
     window.JuggleGame.start();
   });
@@ -143,5 +155,6 @@
     showRanking,
     hideMenu,
     returnToMenu,
+    resetScroll,
   };
 })();
