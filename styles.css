@@ -722,7 +722,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
-  z-index: 10;
+  z-index: 120;
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(2.5rem, 12vw, 4rem);
   color: var(--gold);
